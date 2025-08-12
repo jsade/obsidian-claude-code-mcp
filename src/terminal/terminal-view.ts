@@ -29,9 +29,9 @@ export class ClaudeTerminalView extends ItemView {
 		this.terminal = new Terminal({
 			cursorBlink: true,
 			fontSize: 12,
-			fontFamily: "'SF Mono', SFMono-Regular, ui-monospace, Monaco, Menlo, 'Ubuntu Mono', monospace",
+			fontFamily: "-apple-system, 'SF Mono', SFMono-Regular, ui-monospace, Monaco, Menlo, 'Ubuntu Mono', monospace",
 			fontWeight: 200,
-			macOptionIsMeta: false, // Disable macOS Option key as Meta
+			macOptionIsMeta: true, // Enable macOS Option key as Meta
 		});
 		this.fitAddon = new FitAddon();
 		this.terminal.loadAddon(this.fitAddon);
