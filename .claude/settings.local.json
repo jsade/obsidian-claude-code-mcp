@@ -26,7 +26,9 @@
       "Bash(ls:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
-      "Bash(bun run:*)"
+      "Bash(bun run:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:xtermjs.org)"
     ],
     "deny": []
   }

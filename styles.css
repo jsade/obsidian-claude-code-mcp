@@ -43,6 +43,10 @@
 	-webkit-user-select: none;
 }
 
+.xterm-rows {
+	font-size: 12px;
+}
+
 .xterm.focus,
 .xterm:focus {
 	outline: none;

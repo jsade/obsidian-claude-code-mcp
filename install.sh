@@ -9,7 +9,7 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # Target directory
-TARGET_DIR="$HOME/kb/Personal/.obsidian/plugins/claude-code-mcp"
+TARGET_DIR="$HOME/Development/Diary/.obsidian/plugins/claude-code-mcp"
 
 # Required files
 REQUIRED_FILES=("main.js" "manifest.json" "styles.css")
