@@ -72,11 +72,38 @@ export class ClaudeTerminalView extends ItemView {
 		// Set up shell process - now includes environment setup
 		await this.startShell();
 
-		// Add custom key handler for Shift+Enter to insert a newline
+		// Add custom key handler for special cases:
+		// - Shift+Enter to insert a newline
+		// - Option+key combinations on macOS for international keyboards
 		this.terminal.attachCustomKeyEventHandler((event: KeyboardEvent) => {
 			// We only care about keydown events.
 			if (event.type !== "keydown") {
 				return true;
+			}
+
+			// For macOS Option key combinations that produce special characters
+			// Check if event.key contains a printable character that xterm.js might miss
+			if (process.platform === "darwin" && event.altKey && !event.ctrlKey && !event.metaKey) {
+				// If event.key is a single printable character, handle it manually
+				if (event.key.length === 1 && event.key !== " " && !event.key.match(/[\x00-\x1F]/)) {
+					if (this.pseudoterminal?.shell) {
+						this.pseudoterminal.shell
+							.then((shell) => {
+								if (shell?.stdin?.writable) {
+									shell.stdin.write(event.key);
+								}
+							})
+							.catch((error) => {
+								console.error(
+									"[Terminal] Failed to write Option+key character to PTY stdin:",
+									error
+								);
+							});
+						// Prevent xterm.js from processing this event
+						event.preventDefault();
+						return false;
+					}
+				}
 			}
 
 			// Check for Shift+Enter without other modifiers
