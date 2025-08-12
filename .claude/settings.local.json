@@ -28,7 +28,8 @@
       "Bash(mv:*)",
       "Bash(bun run:*)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:xtermjs.org)"
+      "WebFetch(domain:xtermjs.org)",
+      "Bash(bun add:*)"
     ],
     "deny": []
   }

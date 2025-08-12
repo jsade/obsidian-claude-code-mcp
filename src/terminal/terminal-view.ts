@@ -1,6 +1,7 @@
 import { ItemView, WorkspaceLeaf, Notice, App } from "obsidian";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
+import { WebLinksAddon } from "@xterm/addon-web-links";
 import { spawn, ChildProcess } from "child_process";
 import {
 	Pseudoterminal,
@@ -15,6 +16,7 @@ export const TERMINAL_VIEW_TYPE = "claude-terminal-view";
 export class ClaudeTerminalView extends ItemView {
 	private terminal: Terminal;
 	private fitAddon: FitAddon;
+	private webLinksAddon: WebLinksAddon;
 	private shell: ChildProcess | null = null;
 	private pseudoterminal: Pseudoterminal | null = null;
 	private pythonManager = new PythonManager();
@@ -35,6 +37,15 @@ export class ClaudeTerminalView extends ItemView {
 		});
 		this.fitAddon = new FitAddon();
 		this.terminal.loadAddon(this.fitAddon);
+		
+		// Initialize and load the web links addon with custom handler
+		this.webLinksAddon = new WebLinksAddon((event, uri) => {
+			// Open URLs in the default browser using Obsidian's native handling
+			event.preventDefault();
+			window.open(uri, '_blank');
+			console.debug(`[Terminal] Opening URL: ${uri}`);
+		});
+		this.terminal.loadAddon(this.webLinksAddon);
 	}
 
 	getViewType(): string {
